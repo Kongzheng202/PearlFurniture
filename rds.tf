@@ -37,7 +37,6 @@ resource "aws_db_instance" "mssql" {
   engine                 = "sqlserver-ex"
   engine_version         = "15.00.4043.16.v1"
   instance_class         = "db.t3.micro"
-  name                   = "pearlfurnituredatabase"
   username               = var.db_username
   password               = var.db_password
   publicly_accessible    = false
@@ -51,4 +50,5 @@ resource "aws_db_instance" "mssql" {
     Name = "PearlFurniture-MSSQL"
   }
 }
+
 
