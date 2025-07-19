@@ -10,7 +10,7 @@ resource "aws_db_subnet_group" "sql_subnet_group" {
 resource "aws_security_group" "sql_sg" {
   name        = "sql-sg"
   description = "Allow SQL Server access from backend instances"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.pearlfurniture-vpc.id
 
   ingress {
     description     = "Allow SQL Server"
