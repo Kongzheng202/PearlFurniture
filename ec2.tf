@@ -18,7 +18,7 @@ data "aws_ami" "amazon_linux" {
 resource "aws_security_group" "web_sg" {
   name        = "web-sg"
   description = "Allow HTTP, HTTPS, SSH"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.pearlfurniture-vpc.id
 
   ingress {
     from_port   = 80
