@@ -40,8 +40,9 @@ variable "private_subnet_az2_cidr" {
 }
 
 variable "db_username" {
-  type        = string
   description = "Admin username for SQL Server"
+  type        = string
+  sensitive   = true
 }
 
 variable "db_password" {
