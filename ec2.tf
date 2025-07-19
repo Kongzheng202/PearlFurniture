@@ -60,8 +60,8 @@ resource "aws_security_group" "backend_sg" {
   vpc_id      = aws_vpc.pearlfurniture-vpc.id
 
   ingress {
-    from_port       = 3306
-    to_port         = 3306
+    from_port       = 1433
+    to_port         = 1433
     protocol        = "tcp"
     security_groups = [aws_security_group.web_sg.id]
   }
@@ -105,7 +105,7 @@ resource "aws_instance" "web_az2" {
 }
 
 # Backend EC2 - AZ1 
-resource "aws_instance" "pearlfurniture_az1" {
+resource "aws_instance" "backend-az1" {
   ami                    = data.aws_ami.amazon_linux.id
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_az1.id
