@@ -5,7 +5,7 @@ resource "aws_vpc" "pearlfurniture-vpc" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "fyp-vpc"
+    Name = "pearlfurniture-vpc"
   }
 }
 
@@ -14,7 +14,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.pearlfurniture-vpc.id
 
   tags = {
-    Name = "fyp-igw"
+    Name = "pearlfurniture-igw"
   }
 }
 
