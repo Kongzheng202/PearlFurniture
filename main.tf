@@ -6,10 +6,10 @@ terraform {
     }
   }
 
-     backend "s3" {
-     bucket = "pearlfurniture"
-     key    = "terraform.tfstate"
-     region = "us-east-1"
-     encrypt = true
+  backend "s3" {
+    bucket  = "pearlfurniture"
+    key     = "terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
   }
 }
