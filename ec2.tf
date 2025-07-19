@@ -57,7 +57,7 @@ resource "aws_security_group" "web_sg" {
 resource "aws_security_group" "backend_sg" {
   name        = "backend-sg"
   description = "Allow MySQL from Web/API, allow all egress"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.pearlfurniture-vpc.id
 
   ingress {
     from_port       = 3306
