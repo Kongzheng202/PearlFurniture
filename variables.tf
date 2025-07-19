@@ -38,3 +38,14 @@ variable "private_subnet_az2_cidr" {
   type        = string
   default     = "10.0.4.0/24"
 }
+
+variable "db_username" {
+  type        = string
+  description = "Admin username for SQL Server"
+}
+
+variable "db_password" {
+  type        = string
+  description = "Admin password for SQL Server"
+  sensitive   = true
+}
