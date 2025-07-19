@@ -8,9 +8,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "terraform", "terraform", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
 		main.tf = main.tf
-		TextFile3.txt = TextFile3.txt
+		cloudfront.tf = cloudfront.tf
+		alb.tf = alb.tf
+		ec2.tf = ec2.tf
+		terraform.tfvars = terraform.tfvars
+		outputs.tf = outputs.tf
+		route53.tf = route53.tf
+		rds.tf = rds.tf
 		provider.tf = provider.tf
-		TextFile4.txt = TextFile4.txt
+		variables.tf = variables.tf
+		vpc.tf = vpc.tf
 	EndProjectSection
 EndProject
 Global
