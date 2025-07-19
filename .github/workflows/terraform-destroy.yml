@@ -3,6 +3,10 @@ name: Terraform Destroy
 on:
   workflow_dispatch:  # Allows manual trigger from the GitHub Actions tab
 
+env:
+    TF_VAR_db_username: ${{ secrets.TF_VAR_db_username }}
+    TF_VAR_db_password: ${{ secrets.TF_VAR_db_password }}
+
 jobs:
   destroy:
     runs-on: ubuntu-latest
