@@ -34,7 +34,8 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan 
+        run: terraform plan -out=tfplan -var-file="terraform.tfvars"
+
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
