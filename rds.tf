@@ -42,7 +42,7 @@ resource "aws_db_instance" "mssql" {
   password               = var.db_password
   publicly_accessible    = false
   multi_az               = false
-  db_subnet_group_name   = aws_db_subnet_group.rds_subnet_group.name
+  db_subnet_group_name   = aws_db_subnet_group.sql_subnet_group.name
   vpc_security_group_ids = [aws_security_group.backend_sg.id]
 
   skip_final_snapshot = true
@@ -51,3 +51,4 @@ resource "aws_db_instance" "mssql" {
     Name = "PearlFurniture-MSSQL"
   }
 }
+
