@@ -34,7 +34,8 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -out=tfplan -var="aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}"
+
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
