@@ -34,9 +34,9 @@ resource "aws_security_group" "sql_sg" {
 
 resource "aws_db_instance" "mssql" {
   identifier             = "pearlfurniture-sql"
-  engine                 = "sqlserver-ex"                 # Express Edition (free tier)
-  engine_version         = "15.00.4073.23.v1"              # Use latest available version if needed
-  instance_class         = "db.t3.micro"                  # Free tier eligible
+  engine                 = "sqlserver-ex"     # Express Edition (free tier)
+  engine_version         = "15.00.4073.23.v1" # Use latest available version if needed
+  instance_class         = "db.t3.micro"      # Free tier eligible
   allocated_storage      = 20
   username               = var.db_username
   password               = var.db_password
