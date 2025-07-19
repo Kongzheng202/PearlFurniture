@@ -33,20 +33,21 @@ resource "aws_security_group" "sql_sg" {
 }
 
 resource "aws_db_instance" "mssql" {
-  identifier             = "pearlfurniture-sql"
-  engine                 = "sqlserver-ex"     # Express Edition (free tier)
-  engine_version         = "15.00.4073.23.v1" # Use latest available version if needed
-  instance_class         = "db.t3.micro"      # Free tier eligible
-  allocated_storage      = 20
-  username               = var.db_username
-  password               = var.db_password
-  db_subnet_group_name   = aws_db_subnet_group.sql_subnet_group.name
-  vpc_security_group_ids = [aws_security_group.sql_sg.id]
-  multi_az               = false
-  publicly_accessible    = false
-  skip_final_snapshot    = true
+  allocated_storage    = 20
+  engine               = "sqlserver-ex"
+  engine_version       = "15.00.4043.16.v1"
+  instance_class       = "db.t3.micro"
+  name                 = "pearlfurnituredatabase"
+  username             = var.db_username
+  password             = var.db_password
+  publicly_accessible  = false
+  multi_az             = false
+  db_subnet_group_name = aws_db_subnet_group.rds_subnet_group.name
+  vpc_security_group_ids = [aws_security_group.backend_sg.id]
+
+  skip_final_snapshot = true
 
   tags = {
-    Name = "pearlfurniture-mssql"
+    Name = "PearlFurniture-MSSQL"
   }
 }
