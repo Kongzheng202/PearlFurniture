@@ -30,13 +30,18 @@ namespace PearlFurniture.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<PearlFurnitureUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<PearlFurnitureUser> userManager,
             IUserStore<PearlFurnitureUser> userStore,
             SignInManager<PearlFurnitureUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
+
+
+
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +49,7 @@ namespace PearlFurniture.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -98,6 +104,21 @@ namespace PearlFurniture.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [Required(ErrorMessage = "You must enter the name first before submitting your form!")]
+            [StringLength(256, ErrorMessage = "Enter between 6 - 256 characters", MinimumLength = 6)]
+            [Display(Name = "Customer Full Name")]
+            public string customerfullname { get; set; }
+
+            [Required]
+            [Display(Name = "Customer DOB")]
+            [DataType(DataType.Date)]
+            public DateTime DoB { get; set; }
+
+            [Required]
+            [Display(Name = "Role")]
+            public string Role { get; set; }
+
+
         }
 
 
@@ -111,9 +132,14 @@ namespace PearlFurniture.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+
+                user.CustomerFullName = Input.customerfullname;
+                user.CustomerDOB = Input.DoB;
+                user.EmailConfirmed = true;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -121,6 +147,13 @@ namespace PearlFurniture.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    // ✅ Add this block
+                    if (!await _roleManager.RoleExistsAsync(Input.Role))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(Input.Role));
+                    }
+                    await _userManager.AddToRoleAsync(user, Input.Role);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
@@ -145,6 +178,7 @@ namespace PearlFurniture.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -154,6 +188,9 @@ namespace PearlFurniture.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
+
+
 
         private PearlFurnitureUser CreateUser()
         {

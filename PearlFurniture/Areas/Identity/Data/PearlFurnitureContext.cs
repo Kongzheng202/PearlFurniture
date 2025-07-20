@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PearlFurniture.Areas.Identity.Data;
+using PearlFurniture.Models;
 
 namespace PearlFurniture.Data;
 
@@ -19,4 +20,7 @@ public class PearlFurnitureContext : IdentityDbContext<PearlFurnitureUser>
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
     }
+    public DbSet<Review> Reviews { get; set; }
+    public DbSet<Product> Products { get; set; }
+
 }

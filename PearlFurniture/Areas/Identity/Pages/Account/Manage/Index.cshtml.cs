@@ -59,6 +59,26 @@ namespace PearlFurniture.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [Display(Name = "Your Full Name")]
+            public string customerfullname { get; set; }
+
+            [Required]
+            [Display(Name = "Your DOB")]
+            [DataType(DataType.Date)]
+            public DateTime DoB { get; set; }
+
+            [Required]
+            [Range(18, 100, ErrorMessage = "You must be 18+ to register!")]
+            [Display(Name = "Your Age")]
+            public int age { get; set; }
+
+            [Required]
+            [Display(Name = "Your Address")]
+            [DataType(DataType.MultilineText)]
+            public string Address { get; set; }
+
         }
 
         private async Task LoadAsync(PearlFurnitureUser user)
@@ -70,7 +90,11 @@ namespace PearlFurniture.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                customerfullname = user.CustomerFullName,
+                age = user.CustomerAge,
+                Address = user.CustomerAddress,
+                DoB = user.CustomerDOB
             };
         }
 
@@ -110,6 +134,19 @@ namespace PearlFurniture.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+            if (Input.customerfullname != user.CustomerFullName)
+                user.CustomerFullName = Input.customerfullname;
+
+            if (Input.DoB != user.CustomerDOB)
+                user.CustomerDOB = Input.DoB;
+
+            if (Input.Address != user.CustomerAddress)
+                user.CustomerAddress = Input.Address;
+
+            if (Input.age != user.CustomerAge)
+                user.CustomerAge = Input.age;
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

@@ -1,0 +1,103 @@
+﻿@using System.Text.Json
+@model List<PearlFurniture.Models.Review>
+
+@{
+    ViewData["Title"] = "Product Reviews";
+    var products = ViewBag.Products as List<PearlFurniture.Models.Product>;
+    var selectedProductId = Context.Request.Query["productId"];
+    var chartLabels = ViewBag.ChartLabels as List<string>;
+    var chartValues = ViewBag.ChartValues as List<double>;
+}
+
+<div class="container py-4">
+    <h2 class="mb-3">Customer Reviews</h2>
+
+    <!-- 📊 Line Chart -->
+    <div class="mb-4">
+        <canvas id="ratingChart" height="100"></canvas>
+    </div>
+
+    <!-- 🔍 Product Filter -->
+    <form method="get" asp-action="Review" class="mb-4">
+        <select name="productId" onchange="this.form.submit()" class="form-select w-auto">
+            <option value="">All Products</option>
+
+            @if (products != null)
+            {
+                foreach (var product in products)
+                {
+                    var isSelected = selectedProductId == product.Id.ToString();
+                    <option value="@product.Id" selected="@(isSelected ? "selected" : null)">
+                        @product.Name
+                    </option>
+                }
+            }
+        </select>
+    </form>
+
+    <!-- 📝 Review List -->
+    @if (Model != null && Model.Count > 0)
+    {
+        <ul class="list-group">
+            @foreach (var review in Model)
+            {
+                <li class="list-group-item">
+                    <strong>Rating:</strong> @review.Rating / 5 <br />
+                    <strong>Quality:</strong> @review.Quality <br />
+                    <strong>Performance:</strong> @review.Performance <br />
+                    <strong>Comment:</strong> @review.Comment <br />
+                    @if (!string.IsNullOrEmpty(review.ImagePath))
+                    {
+                        <img src="@review.ImagePath" alt="Review Image" style="max-width: 200px;" class="mt-2" />
+                    }
+                    <br />
+                    <small class="text-muted">Reviewed on @review.CreatedAt.ToString("dd/MM/yyyy")</small>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No reviews available for this product.</p>
+    }
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('ratingChart').getContext('2d');
+        const labels = @Html.Raw(JsonSerializer.Serialize(chartLabels ?? new List<string>()));
+        const data = @Html.Raw(JsonSerializer.Serialize(chartValues ?? new List<double>()));
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Average Rating',
+                    data: data,
+                    borderColor: 'blue',
+                    backgroundColor: 'rgba(0,0,255,0.1)',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 5,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}
+
+

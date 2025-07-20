@@ -1,0 +1,40 @@
+﻿@model PearlFurniture.Models.Review
+
+@{
+    ViewData["Title"] = "Review Product";
+}
+
+<div class="container py-5">
+    <h2 class="mb-4">Write a Review</h2>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ProductId" />
+
+        <label asp-for="Rating">Rating (1–5 stars)</label>
+        <select asp-for="Rating" class="form-control">
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★☆</option>
+            <option value="3">★★★☆☆</option>
+            <option value="2">★★☆☆☆</option>
+            <option value="1">★☆☆☆☆</option>
+        </select>
+
+        <label asp-for="Quality">Quality</label>
+        <input asp-for="Quality" class="form-control" />
+
+        <label asp-for="Performance">Performance</label>
+        <input asp-for="Performance" class="form-control" />
+
+        <label asp-for="Comment">Comment</label>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+
+        <label>Upload Image</label>
+        <input type="file" name="reviewImage" class="form-control" />
+
+        <button type="submit" class="btn btn-primary mt-3">Submit Review</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

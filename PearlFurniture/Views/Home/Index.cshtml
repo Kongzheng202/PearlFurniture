@@ -1,8 +1,120 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<section class="hero bg-dark text-white py-5">
+    <div class="container text-center">
+        <h1 class="display-4">Bring Luxury Home</h1>
+        <p class="lead">
+            At PearlFurniture, we believe that your home deserves furniture that embodies elegance, comfort, and quality. Established with a commitment to exceptional craftsmanship, our collections feature timeless designs tailored to suit modern Malaysian lifestyles. Whether you're furnishing a new space or upgrading a cherished room, PearlFurniture helps you create interiors that feel as good as they look.
+        </p>
+        <a asp-controller="Home" asp-action="Shop" class="btn btn-primary btn-lg">Shop Now</a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <i class="fas fa-star fa-3x mb-3 text-primary"></i>
+                <h5>Premium Quality</h5>
+                <p>Handcrafted from the finest materials.</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <i class="fas fa-couch fa-3x mb-3 text-primary"></i>
+                <h5>Elegant Designs</h5>
+                <p>Modern and timeless styles for your home.</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <i class="fas fa-truck fa-3x mb-3 text-primary"></i>
+                <h5>Free Delivery</h5>
+                <p>Fast and safe shipping within Malaysia.</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <i class="fas fa-undo fa-3x mb-3 text-primary"></i>
+                <h5>30-Day Guarantee</h5>
+                <p>Shop with confidence and peace of mind.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Collections Section -->
+<section class="collections py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Our Furniture Lines</h2>
+        <div class="row g-4">
+            <div class="col-md-4 text-center">
+                <div class="rounded overflow-hidden">
+                    <img src="~/img/sofas.jpg" alt="Sofas" class="img-fluid rounded mb-3 equal-img" />
+                </div>
+                    <h5>Sofas</h5>
+                    <p>Comfortable and stylish seating solutions.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="rounded overflow-hidden">
+                        <img src="~/img/beds.jpg" alt="Beds" class="img-fluid rounded mb-3 equal-img" />
+                    </div>
+                    <h5>Beds & Headboards</h5>
+                    <p>Elegant sleep solutions handcrafted for you.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="rounded overflow-hidden">
+                        <img src="~/img/dining set.jpg" alt="Dining Sets" class="img-fluid rounded mb-3 equal-img" />
+                    </div>
+                    <h5>Dining Sets</h5>
+                    <p>Gather in style with our curated dining range.</p>
+                </div>
+            </div>
+    </div>
+</section>
+
+<!-- Best Sellers Section -->
+<section class="best-sellers py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Best Sellers</h2>
+        <div class="row g-4">
+            <div class="col-md-3 text-center">
+                <div class="card border-0">
+                    <img src="~/img/products/sofa_luxe.jpg" class="card-img-top" alt="Luxe Sofa" />
+                    <div class="card-body">
+                        <h5>Luxe Sofa</h5>
+                        <p class="text-primary">$1,499.00</p>
+                        <a asp-controller="Home" asp-action="Shop" class="btn btn-outline-primary btn-sm">View</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more product cards as needed -->
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Customer Reviews</h2>
+        <div class="owl-carousel testimonial-carousel">
+            <div class="item text-center">
+                <p class="mb-4">“The Luxe Sofa is incredibly comfortable and stylish. My guests always comment on it!” – Sarah Lee</p>
+            </div>
+            <div class="item text-center">
+                <p class="mb-4">“Amazing craftsmanship on the bedframe. Sleep quality improved!” – Amir Hamzah</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Back to Top Button -->
+<a href="#" class="btn btn-light border-3 border-white rounded-circle back-to-top">
+    <i class="fa fa-arrow-up"></i>
+</a>
+
+@section Scripts {
+<script src="~/js/main.js"></script>
+<!-- If you use Owl Carousel or others, load here -->
+<!-- Example: -->
+<!-- <script src="~/lib/owlcarousel/owl.carousel.min.js"></script> -->
+<!-- <script>$('.testimonial-carousel').owlCarousel({...})</script> -->
+}

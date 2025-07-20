@@ -1,22 +1,40 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PearlFurniture.Data;
 using PearlFurniture.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("PearlFurnitureContextConnection") ?? throw new InvalidOperationException("Connection string 'PearlFurnitureContextConnection' not found.");
 
-builder.Services.AddDbContext<PearlFurnitureContext>(options => options.UseSqlServer(connectionString));
+// Database context
+var connectionString = builder.Configuration.GetConnectionString("PearlFurnitureContextConnection")
+                      ?? throw new InvalidOperationException("Connection string 'PearlFurnitureContextConnection' not found.");
 
-builder.Services.AddDefaultIdentity<PearlFurnitureUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<PearlFurnitureContext>();
+builder.Services.AddDbContext<PearlFurnitureContext>(options =>
+    options.UseSqlServer(connectionString));
 
-// Add services to the container.
+// Identity setup
+builder.Services.AddDefaultIdentity<PearlFurnitureUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false; // or true, as needed
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<PearlFurnitureContext>();
+
+
+// MVC & Razor
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await SeedRolesAsync(services);
+}
+
+// Middleware pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -24,23 +42,33 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
-app.UseDefaultFiles(); // This looks for index.html, default.html, etc. in wwwroot
-
-
+app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication(); // after app.UseRouting()
+app.UseAuthentication();
 app.UseAuthorization();
 
-
-// Optional: Keep MVC routing if you're using controllers
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages(); // after app.MapControllerRoute
+app.MapRazorPages();
 app.Run();
+
+
+static async Task SeedRolesAsync(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    string[] roles = { "Admin", "Customer" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+}
+
 
