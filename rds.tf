@@ -25,7 +25,7 @@ resource "aws_security_group" "sql_sg" {
     from_port   = 1433
     to_port     = 1433
     protocol    = "tcp"
-    cidr_blocks = ["113.211.212.189 /24"]
+    cidr_blocks = ["113.211.212.189 /32"]
   }
 
   egress {
