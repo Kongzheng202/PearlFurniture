@@ -35,6 +35,9 @@
         </select>
     </form>
 
+  
+
+
     <!-- 📝 Review List -->
     @if (Model != null && Model.Count > 0)
     {
@@ -66,8 +69,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('ratingChart').getContext('2d');
-        const labels = @Html.Raw(JsonSerializer.Serialize(chartLabels ?? new List<string>()));
-        const data = @Html.Raw(JsonSerializer.Serialize(chartValues ?? new List<double>()));
+        const labels = @Html.Raw(JsonSerializer.Serialize(ViewBag.ChartLabels ?? new List<string>()));
+        const data = @Html.Raw(JsonSerializer.Serialize(ViewBag.ChartValues ?? new List<double>()));
 
         new Chart(ctx, {
             type: 'line',

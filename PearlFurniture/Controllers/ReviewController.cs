@@ -42,9 +42,11 @@ public class ReviewController : Controller
             })
             .ToList();
 
+
         ViewBag.ChartLabels = chartData.Select(d => d.Date).ToList();
         ViewBag.ChartValues = chartData.Select(d => d.AvgRating).ToList();
 
+    
         return View("Review", reviews);
     }
 
@@ -89,6 +91,8 @@ public class ReviewController : Controller
 
         return View(review);
     }
+
+
 }
 
 

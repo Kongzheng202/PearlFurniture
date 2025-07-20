@@ -1,0 +1,35 @@
+﻿@model PearlFurniture.Models.UserProfileViewModel
+
+<div class="card shadow p-4">
+    <div class="row">
+        <!-- Left Panel -->
+        <div class="col-md-4 text-center bg-gradient text-white" style="background: linear-gradient(to right, #ff6a00, #ee0979);">
+            <img src="https://via.placeholder.com/100" class="rounded-circle mb-3" alt="Profile Image">
+            <h4>@Model.FullName</h4>
+            <p>@(User.IsInRole("Admin") ? "Administrator" : "Customer")</p>
+            <i class="fas fa-external-link-alt"></i>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="col-md-8">
+            <h5 class="mb-3">Information</h5>
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>Phone:</strong> @Model.PhoneNumber</p>
+            <p><strong>Age:</strong> @Model.CustomerAge</p>
+            <p><strong>Address:</strong> @Model.CustomerAddress</p>
+            <p><strong>Date of Birth:</strong> @Model.CustomerDOB?.ToString("dd MMM yyyy")</p>
+
+            <h5 class="mt-4">Projects</h5>
+            <p><strong>Recent:</strong> Sample Project</p>
+            <p><strong>Most Viewed:</strong> Example Project</p>
+
+            <div class="mt-3">
+                <a href="#"><i class="fab fa-facebook fa-lg me-3 text-primary"></i></a>
+                <a href="#"><i class="fab fa-twitter fa-lg me-3 text-info"></i></a>
+                <a href="#"><i class="fab fa-instagram fa-lg text-danger"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

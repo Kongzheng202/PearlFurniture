@@ -14,47 +14,22 @@ namespace PearlFurniture.Controllers
         }
 
         // GET: /
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
 
         // GET: /Home/Shop
-        public IActionResult Shop()
-        {
-            return View();
-        }
+        public IActionResult Shop() => View();
 
         // GET: /Home/Contact
-        public IActionResult Contact()
-        {
-            return View();
-        }
+        public IActionResult Contact() => View();
 
         // GET: /Home/Review
-        public IActionResult Review()
-        {
-            return View();
-        }
+        public IActionResult Review() => View();
 
-        // GET: /Home/Profile
-        public IActionResult Profile()
-        {
-            return View();
-        }
+        public IActionResult CreateReview() => View();
 
         // GET: /Home/Privacy
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        public IActionResult Privacy() => View();
 
-        public IActionResult CreateReview()
-        {
-            return View();
-        }
-
-        // GET: /Home/Error
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -62,4 +37,6 @@ namespace PearlFurniture.Controllers
         }
     }
 }
+
+
 

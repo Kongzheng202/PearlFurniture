@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PearlFurniture.Data;
 using PearlFurniture.Areas.Identity.Data;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Database context
@@ -19,6 +20,9 @@ builder.Services.AddDefaultIdentity<PearlFurnitureUser>(options =>
 })
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<PearlFurnitureContext>();
+
+
+
 
 
 // MVC & Razor
@@ -60,7 +64,7 @@ app.Run();
 static async Task SeedRolesAsync(IServiceProvider serviceProvider)
 {
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    string[] roles = { "Admin", "Customer" };
+    var roles = new List<string> { "Admin", "Customer" }; // Simplified collection initialization
 
     foreach (var role in roles)
     {
