@@ -20,6 +20,14 @@ resource "aws_security_group" "sql_sg" {
     security_groups = [aws_security_group.backend_sg.id]
   }
 
+    ingress {
+    description = "Allow SQL from local IP (manual test)"
+    from_port   = 1433
+    to_port     = 1433
+    protocol    = "tcp"
+    cidr_blocks = ["113.211.212.189 /24"] 
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
