@@ -53,17 +53,17 @@ resource "aws_security_group" "web_sg" {
   }
 }
 
-# Backend Security Group
+# Backend Security Group (corrected to allow internal RDS traffic)
 resource "aws_security_group" "backend_sg" {
   name        = "backend-sg"
-  description = "Allow MySQL from Web/API, allow all egress"
+  description = "Allow SQL Server between backend EC2 and RDS"
   vpc_id      = aws_vpc.pearlfurniture-vpc.id
 
   ingress {
     from_port       = 1433
     to_port         = 1433
     protocol        = "tcp"
-    security_groups = [aws_security_group.web_sg.id]
+    security_groups = [aws_security_group.backend_sg.id] # self-reference
   }
 
   egress {
@@ -105,7 +105,7 @@ resource "aws_instance" "web_az2" {
 }
 
 # Backend EC2 - AZ1 
-resource "aws_instance" "backend-az1" {
+resource "aws_instance" "backend_az1" {
   ami                    = data.aws_ami.amazon_linux.id
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_az1.id

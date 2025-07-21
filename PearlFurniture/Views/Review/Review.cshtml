@@ -5,38 +5,69 @@
     ViewData["Title"] = "Product Reviews";
     var products = ViewBag.Products as List<PearlFurniture.Models.Product>;
     var selectedProductId = Context.Request.Query["productId"];
-    var chartLabels = ViewBag.ChartLabels as List<string>;
-    var chartValues = ViewBag.ChartValues as List<double>;
+    var chartLabels = ViewBag.ChartLabels as List<string> ?? new List<string>();
+    var chartValues = ViewBag.ChartValues as List<double> ?? new List<double>();
+    var sentiment = ViewBag.SentimentSummary as Dictionary<string, int> ?? new();
 }
 
-<div class="container py-4">
-    <h2 class="mb-3">Customer Reviews</h2>
+<div class="container py-5">
+    <h2 class="mb-4">🛍️ Customer Reviews</h2>
 
-    <!-- 📊 Line Chart -->
-    <div class="mb-4">
-        <canvas id="ratingChart" height="100"></canvas>
+    <!-- 📊 Rating Trend Chart -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            <h5 class="card-title">📈 Rating Trend</h5>
+            <canvas id="ratingChart" height="120"></canvas>
+        </div>
     </div>
 
     <!-- 🔍 Product Filter -->
     <form method="get" asp-action="Review" class="mb-4">
-        <select name="productId" onchange="this.form.submit()" class="form-select w-auto">
-            <option value="">All Products</option>
-
-            @if (products != null)
-            {
-                foreach (var product in products)
+        <div class="input-group w-auto">
+            <select name="productId" onchange="this.form.submit()" class="form-select">
+                <option value="">All Products</option>
+                @foreach (var product in products)
                 {
                     var isSelected = selectedProductId == product.Id.ToString();
                     <option value="@product.Id" selected="@(isSelected ? "selected" : null)">
                         @product.Name
                     </option>
                 }
-            }
-        </select>
+            </select>
+        </div>
     </form>
 
-  
-
+    <!-- 🔎 Summary Info -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="border rounded p-3 text-center">
+                <h5>⭐ Average Rating</h5>
+                <h3 class="text-primary">@ViewBag.AverageRating / 5</h3>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row text-center">
+                <div class="col-sm-4">
+                    <div class="bg-success bg-opacity-10 p-3 rounded">
+                        <strong>😊 Positive</strong><br />
+                        @sentiment["Positive"]
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="bg-warning bg-opacity-10 p-3 rounded">
+                        <strong>😐 Neutral</strong><br />
+                        @sentiment["Neutral"]
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="bg-danger bg-opacity-10 p-3 rounded">
+                        <strong>😠 Negative</strong><br />
+                        @sentiment["Negative"]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- 📝 Review List -->
     @if (Model != null && Model.Count > 0)
@@ -45,23 +76,20 @@
             @foreach (var review in Model)
             {
                 <li class="list-group-item">
-                    <strong>Rating:</strong> @review.Rating / 5 <br />
-                    <strong>Quality:</strong> @review.Quality <br />
-                    <strong>Performance:</strong> @review.Performance <br />
-                    <strong>Comment:</strong> @review.Comment <br />
-                    @if (!string.IsNullOrEmpty(review.ImagePath))
-                    {
-                        <img src="@review.ImagePath" alt="Review Image" style="max-width: 200px;" class="mt-2" />
-                    }
-                    <br />
-                    <small class="text-muted">Reviewed on @review.CreatedAt.ToString("dd/MM/yyyy")</small>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <strong>Rating:</strong> @review.Rating / 5
+                        </div>
+                        <div class="text-muted">@review.CreatedAt.ToString("dd MMM yyyy")</div>
+                    </div>
+                    <div><strong>Comment:</strong> @review.Comment</div>
                 </li>
             }
         </ul>
     }
     else
     {
-        <p>No reviews available for this product.</p>
+        <div class="alert alert-warning mt-3">No reviews available for this product.</div>
     }
 </div>
 
@@ -69,8 +97,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('ratingChart').getContext('2d');
-        const labels = @Html.Raw(JsonSerializer.Serialize(ViewBag.ChartLabels ?? new List<string>()));
-        const data = @Html.Raw(JsonSerializer.Serialize(ViewBag.ChartValues ?? new List<double>()));
+        const labels = @Html.Raw(JsonSerializer.Serialize(chartLabels));
+        const data = @Html.Raw(JsonSerializer.Serialize(chartValues));
 
         new Chart(ctx, {
             type: 'line',
@@ -79,16 +107,21 @@
                 datasets: [{
                     label: 'Average Rating',
                     data: data,
-                    borderColor: 'blue',
-                    backgroundColor: 'rgba(0,0,255,0.1)',
-                    tension: 0.3,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     fill: true,
+                    tension: 0.3,
                     pointRadius: 4,
                     pointHoverRadius: 6
                 }]
             },
             options: {
                 responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -102,5 +135,6 @@
         });
     </script>
 }
+
 
 

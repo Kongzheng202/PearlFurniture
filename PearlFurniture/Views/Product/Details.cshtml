@@ -13,16 +13,16 @@
             <h1 class="mb-3">@Model.Name</h1>
             <h4 class="text-primary mb-3">RM @Model.Price.ToString("N2")</h4>
             <p class="mb-4">@Model.Description</p>
-
-            <a asp-controller="Review" asp-action="Create" asp-route-productId="@Model.Id" class="btn btn-success btn-lg">
-                <i class="fa fa-credit-card me-2"></i> Buy Now
-            </a>
-            <a asp-controller="Review" asp-action="Review" asp-route-productId="@Model.Id" class="btn btn-outline-primary mt-3">
-                View All Reviews
-            </a>
-
-
         </div>
+
+            <div class="mt-4">
+                <a asp-controller="Review" asp-action="Create" asp-route-productId="@Model.Id" class="btn btn-success btn-lg me-2">
+                    <i class="fa fa-credit-card me-2"></i> Buy Now
+                </a>
+                <a asp-controller="Review" asp-action="Review" asp-route-productId="@Model.Id" class="btn btn-outline-primary btn-lg">
+                    View All Reviews
+                </a>
+            </div>
     </div>
 </div>
 

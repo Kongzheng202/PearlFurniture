@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PearlFurniture.Data;
 using PearlFurniture.Models;
+using PearlFurniture.Helpers;
 
 public class ReviewController : Controller
 {
@@ -10,7 +11,7 @@ public class ReviewController : Controller
     public ReviewController(PearlFurnitureContext context)
     {
         _context = context;
-        Console.WriteLine("🔧 Connected to DB: " + _context.Database.GetDbConnection().ConnectionString);
+        
     }
 
     [HttpGet]
@@ -46,7 +47,20 @@ public class ReviewController : Controller
         ViewBag.ChartLabels = chartData.Select(d => d.Date).ToList();
         ViewBag.ChartValues = chartData.Select(d => d.AvgRating).ToList();
 
-    
+        // Sentiment classification
+        var sentimentCounts = new Dictionary<string, int> { ["Positive"] = 0, ["Neutral"] = 0, ["Negative"] = 0 };
+        foreach (var review in reviews)
+        {
+            if (!string.IsNullOrEmpty(review.Comment))
+            {
+                var sentiment = SentimentAnalyzer.AnalyzeComment(review.Comment);
+                sentimentCounts[sentiment]++;
+            }
+        }
+
+        ViewBag.SentimentSummary = sentimentCounts;
+        ViewBag.AverageRating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
+
         return View("Review", reviews);
     }
 
@@ -60,18 +74,7 @@ public class ReviewController : Controller
     {
         if (ModelState.IsValid)
         {
-            if (reviewImage != null && reviewImage.Length > 0)
-            {
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(reviewImage.FileName);
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/reviews", fileName);
-
-                using (var stream = new FileStream(path, FileMode.Create))
-                {
-                    await reviewImage.CopyToAsync(stream);
-                }
-
-                review.ImagePath = "/img/reviews/" + fileName;
-            }
+            
 
             review.CreatedAt = DateTime.Now;
 
