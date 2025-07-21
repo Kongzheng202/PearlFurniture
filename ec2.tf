@@ -63,7 +63,7 @@ resource "aws_security_group" "backend_sg" {
     from_port       = 1433
     to_port         = 1433
     protocol        = "tcp"
-    security_groups = [aws_security_group.web_sg.id] 
+    security_groups = [aws_security_group.web_sg.id]
   }
 
   egress {
