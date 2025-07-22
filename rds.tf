@@ -30,6 +30,9 @@ resource "aws_security_group" "sql_sg" {
     cidr_blocks = ["113.211.212.189/32"] # <-- Replace with your actual IP if needed
   }
 
+
+
+
   egress {
     from_port   = 0
     to_port     = 0
