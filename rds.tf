@@ -30,6 +30,13 @@ resource "aws_security_group" "sql_sg" {
     cidr_blocks = ["113.211.212.189/32"] # <-- Replace with your actual IP if needed
   }
 
+  ingress {
+    from_port   = 1433
+    to_port     = 1433
+    protocol    = "tcp"
+    cidr_blocks = ["100.24.2.85/32"]
+  }
+
 
 
 

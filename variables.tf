@@ -50,3 +50,7 @@ variable "db_password" {
   description = "Admin password for SQL Server"
   sensitive   = true
 }
+
+variable "domain_name" {
+  default = "pearl-furniture.com"
+}
