@@ -32,7 +32,7 @@ public class ProfileController : Controller
             CustomerDOB = user.CustomerDOB
         };
 
-        return View(model);
+        return View();
     }
 
 }

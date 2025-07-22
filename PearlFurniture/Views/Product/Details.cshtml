@@ -6,14 +6,20 @@
 
 <div class="container py-5">
     <div class="row">
+        <!-- 🖼️ Product Image -->
         <div class="col-md-6">
-            <img src="~/img/@Model.Image" alt="@Model.Name" class="img-fluid rounded" />
+            <img src="~/img/@Model.Image"
+                 asp-append-version="true"
+                 alt="@Model.Name"
+                 class="img-fluid rounded shadow-sm"
+                 style="max-height: 400px;" />
         </div>
+
+        <!-- 📄 Product Info -->
         <div class="col-md-6">
             <h1 class="mb-3">@Model.Name</h1>
             <h4 class="text-primary mb-3">RM @Model.Price.ToString("N2")</h4>
             <p class="mb-4">@Model.Description</p>
-        </div>
 
             <div class="mt-4">
                 <a asp-controller="Review" asp-action="Create" asp-route-productId="@Model.Id" class="btn btn-success btn-lg me-2">
@@ -23,6 +29,9 @@
                     View All Reviews
                 </a>
             </div>
+        </div>
     </div>
 </div>
+
+
 

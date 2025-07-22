@@ -1,10 +1,14 @@
-﻿@model List<PearlFurniture.Models.UserProfileViewModel>
+﻿@model PearlFurniture.Models.UserProfileViewModel
 
-<div class="card shadow p-4">
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="card shadow p-4 mt-4">
     <div class="row">
         <!-- Left Panel -->
         <div class="col-md-4 text-center bg-gradient text-white" style="background: linear-gradient(to right, #ff6a00, #ee0979);">
-            <img src="https://via.placeholder.com/100" class="rounded-circle mb-3" alt="Profile Image">
+            <img src="~/img/avatar.jpg" class="rounded-circle mb-3" alt="Profile Image" style="width: 120px; height: 120px;">
             <h4>@Model.FullName</h4>
             <p>@(User.IsInRole("Admin") ? "Administrator" : "Customer")</p>
             <i class="fas fa-external-link-alt"></i>
@@ -31,5 +35,6 @@
         </div>
     </div>
 </div>
+
 
 

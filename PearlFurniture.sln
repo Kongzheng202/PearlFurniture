@@ -1,21 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PearlFurniture", "PearlFurniture\PearlFurniture.csproj", "{CC63A81C-7B03-4388-8037-2AB2A4801E7A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "terraform", "terraform", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
-		main.tf = main.tf
-		cloudfront.tf = cloudfront.tf
 		alb.tf = alb.tf
 		ec2.tf = ec2.tf
-		terraform.tfvars = terraform.tfvars
+		main.tf = main.tf
 		outputs.tf = outputs.tf
-		route53.tf = route53.tf
-		rds.tf = rds.tf
 		provider.tf = provider.tf
+		rds.tf = rds.tf
+		terraform.tfvars = terraform.tfvars
 		variables.tf = variables.tf
 		vpc.tf = vpc.tf
 	EndProjectSection
