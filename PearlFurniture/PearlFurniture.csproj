@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,11 +8,11 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\Details.cshtml" />
-    <Content Remove="Views\Profile\Index.cshtml" />
+    <Content Remove="Views\Profile\Profile.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Profile\Index.cshtml" />
+    <None Include="Views\Profile\Profile.cshtml" />
     <None Include="Views\Review\Create.cshtml" />
     <None Include="Views\Product\Details.cshtml" />
   </ItemGroup>
