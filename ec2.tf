@@ -130,14 +130,3 @@ resource "aws_instance" "backend_az2" {
   }
 }
 
-resource "aws_instance" "web_az3" {
-  ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = "t3.micro"
-  subnet_id              = aws_subnet.public_az1.id
-  vpc_security_group_ids = [aws_security_group.web_sg.id]
-  key_name               = "pearlfurniture"
-
-  tags = {
-    Name = "web-az1"
-  }
-}
